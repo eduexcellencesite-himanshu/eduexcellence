@@ -25,7 +25,9 @@ const csp = [
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
   "media-src 'self' https://eduexcellence.in",
-  `connect-src 'self' ${apiOrigin} https://challenges.cloudflare.com`,
+  // Turnstile's live widget also probes a few Cloudflare subdomains and dnstest.dev,
+  // and fetches a data: URL, as part of its bot checks; blocking those logs CSP errors.
+  `connect-src 'self' ${apiOrigin} https://challenges.cloudflare.com https://*.challenges.cloudflare.com https://*.dnstest.dev https://dnstest.dev data:`,
   "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://www.google.com https://maps.google.com https://challenges.cloudflare.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
