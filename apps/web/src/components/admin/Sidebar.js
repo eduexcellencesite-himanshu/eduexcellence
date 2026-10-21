@@ -20,7 +20,7 @@ const menus = [
     icon: <DashboardOutlinedIcon />,
   },
   {
-    title: "Contacts",
+    title: "Contact Us",
     href: "/admin/contacts",
     icon: <ContactPhoneOutlinedIcon />,
   },

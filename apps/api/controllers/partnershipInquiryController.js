@@ -84,10 +84,10 @@ exports.createInquiry = async (req, res) => {
       data: { id: inquiry._id },
     });
   } catch (error) {
-    console.error("Create partnership inquiry:", error);
+    console.error("Create partnership enquiry:", error);
     return res.status(500).json({
       success: false,
-      message: "Unable to submit your inquiry.",
+      message: "Unable to submit your enquiry.",
     });
   }
 };
@@ -154,10 +154,10 @@ exports.getInquiries = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Get partnership inquiries:", error);
+    console.error("Get partnership enquiries:", error);
     return res.status(500).json({
       success: false,
-      message: "Unable to fetch inquiries.",
+      message: "Unable to fetch enquiries.",
     });
   }
 };
@@ -168,7 +168,7 @@ exports.getInquiryById = async (req, res) => {
     if (!mongoose.isValidObjectId(req.params.id)) {
       return res.status(400).json({
         success: false,
-        message: "Invalid inquiry ID.",
+        message: "Invalid enquiry ID.",
       });
     }
 
@@ -177,16 +177,16 @@ exports.getInquiryById = async (req, res) => {
     if (!inquiry) {
       return res.status(404).json({
         success: false,
-        message: "Inquiry not found.",
+        message: "Enquiry not found.",
       });
     }
 
     return res.json({ success: true, data: inquiry });
   } catch (error) {
-    console.error("Get inquiry:", error);
+    console.error("Get enquiry:", error);
     return res.status(500).json({
       success: false,
-      message: "Unable to fetch inquiry.",
+      message: "Unable to fetch enquiry.",
     });
   }
 };
@@ -197,7 +197,7 @@ exports.updateInquiry = async (req, res) => {
     if (!mongoose.isValidObjectId(req.params.id)) {
       return res.status(400).json({
         success: false,
-        message: "Invalid inquiry ID.",
+        message: "Invalid enquiry ID.",
       });
     }
 
@@ -243,20 +243,20 @@ exports.updateInquiry = async (req, res) => {
     if (!inquiry) {
       return res.status(404).json({
         success: false,
-        message: "Inquiry not found.",
+        message: "Enquiry not found.",
       });
     }
 
     return res.json({
       success: true,
-      message: "Inquiry updated successfully.",
+      message: "Enquiry updated successfully.",
       data: inquiry,
     });
   } catch (error) {
-    console.error("Update inquiry:", error);
+    console.error("Update enquiry:", error);
     return res.status(500).json({
       success: false,
-      message: "Unable to update inquiry.",
+      message: "Unable to update enquiry.",
     });
   }
 };
@@ -267,7 +267,7 @@ exports.deleteInquiry = async (req, res) => {
     if (!mongoose.isValidObjectId(req.params.id)) {
       return res.status(400).json({
         success: false,
-        message: "Invalid inquiry ID.",
+        message: "Invalid enquiry ID.",
       });
     }
 
@@ -278,19 +278,19 @@ exports.deleteInquiry = async (req, res) => {
     if (!inquiry) {
       return res.status(404).json({
         success: false,
-        message: "Inquiry not found.",
+        message: "Enquiry not found.",
       });
     }
 
     return res.json({
       success: true,
-      message: "Inquiry deleted successfully.",
+      message: "Enquiry deleted successfully.",
     });
   } catch (error) {
-    console.error("Delete inquiry:", error);
+    console.error("Delete enquiry:", error);
     return res.status(500).json({
       success: false,
-      message: "Unable to delete inquiry.",
+      message: "Unable to delete enquiry.",
     });
   }
 };

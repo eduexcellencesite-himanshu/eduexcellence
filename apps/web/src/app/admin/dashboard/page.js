@@ -60,7 +60,7 @@ export default function Dashboard() {
           <Card label="Contact enquiries" value={n(stats?.contacts.total)} note={week(stats?.contacts.week)} href="/admin/contacts" />
           <Card label="Registrations" value={n(stats?.registrations.total)} note={week(stats?.registrations.week)} href="/admin/registration" />
           <Card
-            label="Partnership inquiries"
+            label="Partnership enquiries"
             value={n(stats?.inquiries.total)}
             note={stats ? `${stats.inquiries.pending} awaiting a reply · ${stats.inquiries.week} this week` : ""}
             href="/admin/partnership"

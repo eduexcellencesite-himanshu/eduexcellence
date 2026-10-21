@@ -10,7 +10,7 @@ const {
 const controller = require("../controllers/partnershipInquiryController");
 const { requireTurnstile } = require("../utils/turnstile");
 
-// Public route: submit a partnership inquiry
+// Public route: submit a partnership enquiry
 router.post("/", requireTurnstile, controller.createInquiry);
 // Admin routes: authentication + admin role required
 router.get("/admin", auth, adminOnly, controller.getInquiries);

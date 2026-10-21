@@ -32,7 +32,7 @@ export default function Partnership() {
     });
   };
 
-  // Fetch partnership inquiries from the backend.
+  // Fetch partnership enquiries from the backend.
   const fetchInquiries = useCallback(async (currentPage) => {
     try {
       setLoading(true);
@@ -88,7 +88,7 @@ export default function Partnership() {
       setInquiries(Array.isArray(items) ? items : []);
       setPages(Math.max(1, Number(data.pages) || 1));
     } catch (err) {
-      console.error("Fetch partnership inquiries error:", err);
+      console.error("Fetch partnership enquiries error:", err);
       setError(
         err.message || "Something went wrong while fetching inquiries."
       );
@@ -223,7 +223,7 @@ export default function Partnership() {
         </div>
       )}
 
-      {/* Inquiries table */}
+      {/* Enquiries table */}
       {loading ? (
         <div className="rounded-3xl bg-white p-10 text-center">
           Loading partnership inquiries...
@@ -238,7 +238,7 @@ export default function Partnership() {
 
       {!loading && !error && inquiries.length === 0 && (
         <p className="text-center text-gray-500">
-          No partnership inquiries found.
+          No partnership enquiries found.
         </p>
       )}
 
@@ -281,7 +281,7 @@ export default function Partnership() {
         </div>
       )}
 
-      {/* Inquiry details modal */}
+      {/* Enquiry details modal */}
       {open && selectedInquiry && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/50 p-4"
@@ -299,7 +299,7 @@ export default function Partnership() {
                 id="partnership-modal-title"
                 className="text-xl font-bold sm:text-2xl"
               >
-                Partnership Inquiry Details
+                Partnership Enquiry Details
               </h2>
 
               <button
