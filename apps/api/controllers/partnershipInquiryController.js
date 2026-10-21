@@ -12,31 +12,6 @@ const VALID_STATUSES = [
 const escapeRegex = (value) =>
   value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
-// Verify a Cloudflare Turnstile token server-side. Falls back to Cloudflare's
-// public test secret (always passes) when TURNSTILE_SECRET_KEY is not set, so
-// local dev works — set the real secret in production.
-const verifyTurnstile = async (token, ip) => {
-  const secret =
-    process.env.TURNSTILE_SECRET_KEY ||
-    "1x0000000000000000000000000000000AA";
-  if (!process.env.TURNSTILE_SECRET_KEY) {
-    console.warn("[turnstile] TURNSTILE_SECRET_KEY not set — using test secret");
-  }
-  try {
-    const body = new URLSearchParams({ secret, response: token });
-    if (ip) body.set("remoteip", ip);
-    const r = await fetch(
-      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-      { method: "POST", body }
-    );
-    const data = await r.json();
-    return Boolean(data?.success);
-  } catch (err) {
-    console.error("[turnstile] verify failed:", err.message);
-    return false;
-  }
-};
-
 const INTERESTS = [
   "Speaking Opportunities",
   "Expo & Exhibition",
@@ -47,7 +22,7 @@ const INTERESTS = [
 // POST /api/partnership-inquiries
 exports.createInquiry = async (req, res) => {
   try {
-    const { name, email, phone, organisation, message, interest, pageUrl, turnstileToken } =
+    const { name, email, phone, organisation, message, interest, pageUrl } =
       req.body;
 
     if (
@@ -88,25 +63,6 @@ exports.createInquiry = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Please provide a valid email address.",
-      });
-    }
-
-    if (!turnstileToken || typeof turnstileToken !== "string") {
-      return res.status(400).json({
-        success: false,
-        message: "Please complete the verification and try again.",
-      });
-    }
-
-    const clientIp =
-      req.headers["cf-connecting-ip"] ||
-      req.headers["x-forwarded-for"]?.split(",")[0]?.trim() ||
-      req.ip;
-
-    if (!(await verifyTurnstile(turnstileToken, clientIp))) {
-      return res.status(400).json({
-        success: false,
-        message: "Verification failed. Please try again.",
       });
     }
 

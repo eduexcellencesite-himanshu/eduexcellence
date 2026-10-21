@@ -8,27 +8,10 @@ const {
 } = require("../middleware/authMiddleware");
 
 const controller = require("../controllers/partnershipInquiryController");
+const { requireTurnstile } = require("../utils/turnstile");
 
 // Public route: submit a partnership inquiry
-router.post("/", controller.createInquiry);
-console.log("auth:", typeof auth);
-console.log("adminOnly:", typeof adminOnly);
-console.log(
-  "getInquiries:",
-  typeof controller.getInquiries
-);
-console.log(
-  "getInquiryById:",
-  typeof controller.getInquiryById
-);
-console.log(
-  "updateInquiry:",
-  typeof controller.updateInquiry
-);
-console.log(
-  "deleteInquiry:",
-  typeof controller.deleteInquiry
-);
+router.post("/", requireTurnstile, controller.createInquiry);
 // Admin routes: authentication + admin role required
 router.get("/admin", auth, adminOnly, controller.getInquiries);
 

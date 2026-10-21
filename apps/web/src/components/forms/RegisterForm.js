@@ -11,6 +11,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import { PROGRAMS, getProgram, isPast } from "../../lib/programs";
 import Swal from "sweetalert2";
+import { useTurnstile, TurnstileField } from "../ui/useTurnstile";
 const STATES = [
   "Punjab",
   "Haryana",
@@ -40,6 +41,7 @@ const group =
 const req = <span className="text-[#E8861A]">*</span>;
 
 export default function RegisterForm({ initialProgram }) {
+  const captcha = useTurnstile();
   const fallback = PROGRAMS.find((p) => !isPast(p))?.slug || PROGRAMS[0].slug;
 
   const [slug, setSlug] = useState(
@@ -180,7 +182,9 @@ const handleChange = (e) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validate()) return;
+    const valid = validate();
+    const verified = captcha.require();
+    if (!valid || !verified) return;
 
     try {
       setLoading(true);
@@ -195,6 +199,7 @@ const handleChange = (e) => {
           body: JSON.stringify({
             ...formData,
             program: slug,
+            turnstileToken: captcha.token,
           }),
         },
       );
@@ -231,6 +236,7 @@ const handleChange = (e) => {
     } catch (error) {
       alert(error.message);
     } finally {
+      captcha.reset();
       setLoading(false);
     }
   };
@@ -546,6 +552,8 @@ const handleChange = (e) => {
               </div>
             </>
           )}
+
+          <TurnstileField captcha={captcha} className="mt-5" />
 
           <button
             type="submit"

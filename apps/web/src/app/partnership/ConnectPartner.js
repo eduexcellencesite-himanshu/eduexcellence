@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useTurnstile, TurnstileField } from "../../components/ui/useTurnstile";
 import Swal from "sweetalert2";
 
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -15,10 +16,6 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 const INTERESTS = ["Speaking Opportunities", "Expo & Exhibition", "Partnership & Sponsorship", "Recognition"];
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-// Cloudflare's public test key renders a widget that always passes; swap for the
-// real site key (NEXT_PUBLIC_TURNSTILE_SITE_KEY) in production.
-const TURNSTILE_SITE_KEY =
-  process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "1x00000000000000000000AA";
 
 const contacts = [
   { title: "For Sponsorship & Partnerships", name: "Dhruv Lamba", phone: "9910876248", email: "dhruv@dextres.com", Icon: HandshakeOutlinedIcon },
@@ -109,44 +106,7 @@ export default function ConnectPartner() {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState("");
-  const [captchaError, setCaptchaError] = useState("");
-  const widgetRef = useRef(null);
-  const widgetIdRef = useRef(null);
-
-  // Load + render the Turnstile widget once.
-  useEffect(() => {
-    const render = () => {
-      if (!widgetRef.current || widgetIdRef.current !== null || !window.turnstile) return;
-      widgetIdRef.current = window.turnstile.render(widgetRef.current, {
-        sitekey: TURNSTILE_SITE_KEY,
-        theme: "light",
-        // The normal widget is a fixed 300px iframe, wider than the form on small
-        // phones — it would blow the layout out. Use the compact widget there.
-        size: window.innerWidth < 420 ? "compact" : "flexible",
-        callback: (t) => { setToken(t); setCaptchaError(""); },
-        "expired-callback": () => setToken(""),
-        "error-callback": () => { setToken(""); setCaptchaError("Verification failed to load. Please refresh and try again."); },
-      });
-    };
-    if (window.turnstile) { render(); return; }
-    const id = "cf-turnstile-script";
-    let s = document.getElementById(id);
-    if (!s) {
-      s = document.createElement("script");
-      s.id = id;
-      s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-      s.async = true;
-      s.defer = true;
-      document.head.appendChild(s);
-    }
-    s.addEventListener("load", render, { once: true });
-  }, []);
-
-  const resetCaptcha = useCallback(() => {
-    setToken("");
-    if (window.turnstile && widgetIdRef.current !== null) window.turnstile.reset(widgetIdRef.current);
-  }, []);
+  const captcha = useTurnstile();
 
   // Opportunity cards above dispatch this so clicking "Apply to speak" etc.
   // preselects the matching interest here.
@@ -185,8 +145,8 @@ export default function ConnectPartner() {
     e.preventDefault();
     if (loading) return;
     const ok = validateAll();
-    if (!token) setCaptchaError("Please complete the verification below.");
-    if (!ok || !token) return;
+    const verified = captcha.require();
+    if (!ok || !verified) return;
 
     setLoading(true);
     try {
@@ -202,7 +162,7 @@ export default function ConnectPartner() {
           organisation: form.organisation.trim(),
           message: form.message.trim(),
           pageUrl: window.location.href,
-          turnstileToken: token,
+          turnstileToken: captcha.token,
         }),
       });
       const result = await res.json().catch(() => null);
@@ -211,7 +171,7 @@ export default function ConnectPartner() {
       setForm(initialForm);
       setErrors({});
       setTouched({});
-      resetCaptcha();
+      captcha.reset();
       await Swal.fire({
         ...swalBase,
         icon: "success",
@@ -221,7 +181,7 @@ export default function ConnectPartner() {
         confirmButtonText: "Close",
       });
     } catch (err) {
-      resetCaptcha();
+      captcha.reset();
       await Swal.fire({
         ...swalBase,
         icon: "error",
@@ -358,11 +318,7 @@ export default function ConnectPartner() {
                 </div>
 
                 {/* Cloudflare Turnstile */}
-                <div>
-                  {/* Compact widget on phones is narrower than the form, so centre it there. */}
-                  <div ref={widgetRef} className="flex min-h-[65px] justify-center sm:justify-start" />
-                  {captchaError && <p className="mt-1.5 text-[12.5px] font-medium text-red-500">{captchaError}</p>}
-                </div>
+                <TurnstileField captcha={captcha} />
 
                 <button
                   type="submit"

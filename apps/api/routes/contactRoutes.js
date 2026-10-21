@@ -16,8 +16,9 @@ auth,
 const {
 adminOnly,
 } = require("../middleware/roleMiddleware");
+const { requireTurnstile } = require("../utils/turnstile");
 
-router.post("/contact", createContact);
+router.post("/contact", requireTurnstile, createContact);
 
 router.get(
 "/admin/contacts",

@@ -3,6 +3,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useTurnstile, TurnstileField } from "../ui/useTurnstile";
 const req = <span className="text-[#E8861A]">*</span>;
 const labelCls = "mb-1.5 block text-[15px] font-semibold text-[#3A4660]";
 
@@ -30,6 +31,7 @@ const STATES = [
 ];
 
 export default function ContactForm() {
+  const captcha = useTurnstile();
   const group =
   "mt-6 border-b border-[#E7E9F0] pb-3 text-[14px] font-bold uppercase tracking-[0.12em] text-[#E8861A]";
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -123,7 +125,9 @@ if (!formData.lastName.trim()) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validate()) return;
+    const valid = validate();
+    const verified = captcha.require();
+    if (!valid || !verified) return;
 
     try {
       setLoading(true);
@@ -135,7 +139,7 @@ if (!formData.lastName.trim()) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({ ...formData, turnstileToken: captcha.token }),
         },
       );
 
@@ -167,6 +171,7 @@ if (!formData.lastName.trim()) {
     } catch (error) {
       alert(error.message);
     } finally {
+      captcha.reset();
       setLoading(false);
     }
   };
@@ -437,6 +442,8 @@ if (!formData.lastName.trim()) {
       </p>
     )}
   </div>
+
+  <TurnstileField captcha={captcha} className="mt-5" />
 
   <button
     type="submit"

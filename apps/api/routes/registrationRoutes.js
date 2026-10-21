@@ -17,9 +17,11 @@ auth,
 const {
 adminOnly,
 } = require("../middleware/roleMiddleware");
+const { requireTurnstile } = require("../utils/turnstile");
 
 router.post(
 "/registration",
+requireTurnstile,
 createRegistration
 );
 

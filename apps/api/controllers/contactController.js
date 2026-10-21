@@ -9,7 +9,15 @@ try {
 const fullName =
   req.body.fullName ||
   [req.body.firstName, req.body.lastName].filter(Boolean).join(" ").trim();
-const contact = await Contact.create({ ...req.body, fullName });
+const email = String(req.body.email || "").trim();
+const message = String(req.body.message || "").trim();
+if (!fullName || !email || !message) {
+  return res.status(400).json({ success: false, message: "Name, email and message are required." });
+}
+if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  return res.status(400).json({ success: false, message: "Please provide a valid email address." });
+}
+const contact = await Contact.create({ ...req.body, fullName, email: email.toLowerCase(), message });
 
 await notify({
   userEmail: contact.email,
