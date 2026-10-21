@@ -12,25 +12,7 @@ import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import { PROGRAMS, getProgram, isPast } from "../../lib/programs";
 import Swal from "sweetalert2";
 import { useTurnstile, TurnstileField } from "../ui/useTurnstile";
-const STATES = [
-  "Punjab",
-  "Haryana",
-  "Rajasthan",
-  "Gujarat",
-  "Madhya Pradesh",
-  "Uttar Pradesh",
-  "Maharashtra",
-  "Uttarakhand",
-  "Jammu & Kashmir",
-  "West Bengal",
-  "Jharkhand",
-  "Chhattisgarh",
-  "Bihar",
-  "Himachal Pradesh",
-  "Assam",
-  "North East States",
-  "Other",
-];
+import StateCityFields from "../ui/StateCityFields";
 const FEES = { "educarnival-iitmadras-2026": "₹15,000" };
 
 const input =
@@ -455,55 +437,15 @@ const handleChange = (e) => {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div>
-              <label className={label}>State {req}</label>
-
-              <div className="relative">
-                <select
-                  name="state"
-                  value={formData.state}
-                  onChange={handleChange}
-                  className={`${input} custom-select pr-12`}
-                >
-                  <option value="">Select State</option>
-
-                  {STATES.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
-                    </option>
-                  ))}
-                </select>
-
-                <KeyboardArrowDownIcon
-                  sx={{
-                    fontSize: 22,
-                    color: "#3A4660",
-                  }}
-                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2"
-                />
-              </div>
-
-              {errors.state && (
-                <p className="mt-1 text-xs text-red-500">{errors.state}</p>
-              )}
-            </div>
-            <div>
-              <label className={label}>City {req}</label>
-              <input
-                className={input}
-                name="city"
-                value={formData.city}
-                maxLength={30}
-                placeholder="City"
-                autoComplete="address-level2"
-                onChange={handleChange}
-              />{" "}
-              {errors.city && (
-                <p className="mt-1 text-xs text-red-500">{errors.city}</p>
-              )}
-            </div>
-          </div>
+          <StateCityFields
+            state={formData.state}
+            city={formData.city}
+            errors={errors}
+            setField={(name, value) => handleChange({ target: { name, value } })}
+            inputClass={input}
+            labelClass={label}
+            required={req}
+          />
 
           {!isConf && (
             <>

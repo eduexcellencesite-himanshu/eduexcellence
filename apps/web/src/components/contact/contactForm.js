@@ -4,31 +4,13 @@ import Swal from "sweetalert2";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useTurnstile, TurnstileField } from "../ui/useTurnstile";
+import StateCityFields from "../ui/StateCityFields";
 const req = <span className="text-[#E8861A]">*</span>;
 const labelCls = "mb-1.5 block text-[15px] font-semibold text-[#3A4660]";
 
 const inputCls =
   "w-full rounded-xl border border-[#E7E9F0] px-3.5 py-3 text-[15px] text-[#16223A] outline-none transition focus:border-[#FF9D29] focus:ring-2 focus:ring-[#FF9D29]/20";
 
-const STATES = [
-  "Punjab",
-  "Haryana",
-  "Rajasthan",
-  "Gujarat",
-  "Madhya Pradesh",
-  "Uttar Pradesh",
-  "Maharashtra",
-  "Uttarakhand",
-  "Jammu & Kashmir",
-  "West Bengal",
-  "Jharkhand",
-  "Chhattisgarh",
-  "Bihar",
-  "Himachal Pradesh",
-  "Assam",
-  "North East States",
-  "Other",
-];
 
 export default function ContactForm() {
   const captcha = useTurnstile();
@@ -365,63 +347,15 @@ if (!formData.lastName.trim()) {
     </div>
   </div>
 
-  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-    <div>
-      <label className={labelCls}>
-        State {req}
-      </label>
-
-      <div className="relative">
-        <select
-          name="state"
-          value={formData.state}
-          onChange={handleChange}
-          className={`${inputCls} appearance-none pr-12`}
-        >
-          <option value="">Select State</option>
-
-          {STATES.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
-
-        <KeyboardArrowDownIcon
-          sx={{ fontSize: 22, color: "#3A4660" }}
-          className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2"
-        />
-      </div>
-
-      {errors.state && (
-        <p className="mt-1 text-xs text-red-500">
-          {errors.state}
-        </p>
-      )}
-    </div>
-
-    <div>
-      <label className={labelCls}>
-        City {req}
-      </label>
-
-      <input
-        type="text"
-        name="city"
-        value={formData.city}
-        onChange={handleChange}
-        maxLength={30}
-        className={inputCls}
-        placeholder="City"
-      />
-
-      {errors.city && (
-        <p className="mt-1 text-xs text-red-500">
-          {errors.city}
-        </p>
-      )}
-    </div>
-  </div>
+  <StateCityFields
+    state={formData.state}
+    city={formData.city}
+    errors={errors}
+    setField={(name, value) => handleChange({ target: { name, value } })}
+    inputClass={inputCls}
+    labelClass={labelCls}
+    required={req}
+  />
 
   {/* MESSAGE */}
   <div className={group}>Message</div>
