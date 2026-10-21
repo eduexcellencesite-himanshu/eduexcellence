@@ -943,7 +943,6 @@ export function generateStaticParams() {
   return [
     { slug: "usa-study-visit-2026" },
     { slug: "uk-study-visit-2026" },
-    { slug: "japan-study-visit-2026" },
     { slug: "singapore" },
     { slug: "finland" },
     { slug: "australia-germany" },

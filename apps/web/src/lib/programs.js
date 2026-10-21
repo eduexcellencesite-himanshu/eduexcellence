@@ -22,16 +22,9 @@ export const PROGRAMS = [
     startDate: "2026-10-12",
     endDate: "2026-10-18",
   },
-  {
-    slug: "japan-study-visit-2026",
-    type: "study-visit",
-    title: "Japan Study Visit 2026",
-    short: "Japan Study Visit 2026",
-    location: "Tokyo & Kyoto, Japan",
-    dateLabel: "09–15 Nov 2026",
-    startDate: "2026-11-09",
-    endDate: "2026-11-15",
-  },
+  // Japan Study Visit 2026 removed on 2026-10-21 (placeholder programme, not confirmed).
+  // Its page copy is still in app/study-visits/[slug]/page.js; re-add the entry here
+  // and in generateStaticParams there to bring it back.
   {
     slug: "singapore",
     type: "study-visit",
