@@ -13,6 +13,7 @@ const partnershipInquiryRoutes = require(
 const app = express();
 const registrationRoutes = require("./routes/registrationRoutes");
 const sponsorRoutes = require("./routes/sponsorRoutes");
+const statsRoutes = require("./routes/statsRoutes");
 // Database Connection: warm it up at boot, and make every /api request wait for
 // it so a cold start never handles a request before Mongo is ready.
 connectDB().catch(() => {});
@@ -44,6 +45,7 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api", contactRoutes);
+app.use("/api", statsRoutes);
 app.use(
   "/api/partnership-inquiries",
   partnershipInquiryRoutes
