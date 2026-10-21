@@ -348,7 +348,9 @@ const handleChange = (e) => {
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleChange}
-                   maxLength={30}
+                  maxLength={30}
+                  placeholder="First name"
+                  autoComplete="given-name"
                   className={input}
                 />
 
@@ -367,7 +369,9 @@ const handleChange = (e) => {
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleChange}
-                   maxLength={20}
+                  maxLength={20}
+                  placeholder="Last name"
+                  autoComplete="family-name"
                   className={input}
                 />
 
@@ -382,9 +386,13 @@ const handleChange = (e) => {
               <label className={label}>Mobile (WhatsApp) {req}</label>
               <input
                 name="mobile"
+                type="tel"
+                inputMode="numeric"
                 value={formData.mobile}
-                 maxLength={10}
+                maxLength={10}
                 onChange={handleChange}
+                placeholder="10-digit mobile"
+                autoComplete="tel"
                 className={input}
               />
 
@@ -396,9 +404,12 @@ const handleChange = (e) => {
               <label className={label}>Email address {req}</label>
               <input
                 name="email"
+                type="email"
                 value={formData.email}
-                 maxLength={30}
+                maxLength={254}
                 onChange={handleChange}
+                placeholder="you@school.edu"
+                autoComplete="email"
                 className={input}
               />
 
@@ -416,7 +427,9 @@ const handleChange = (e) => {
                 name="school"
                 value={formData.school}
                 onChange={handleChange}
-                 maxLength={50}
+                maxLength={50}
+                placeholder="School / institution name"
+                autoComplete="organization"
                 className={input}
               />
               {errors.school && (
@@ -429,7 +442,9 @@ const handleChange = (e) => {
                 name="designation"
                 value={formData.designation}
                 onChange={handleChange}
-                 maxLength={30}
+                maxLength={30}
+                placeholder="e.g. Principal, Director, Trustee"
+                autoComplete="organization-title"
                 className={input}
               />
 
@@ -479,7 +494,9 @@ const handleChange = (e) => {
                 className={input}
                 name="city"
                 value={formData.city}
-                 maxLength={30}
+                maxLength={30}
+                placeholder="City"
+                autoComplete="address-level2"
                 onChange={handleChange}
               />{" "}
               {errors.city && (

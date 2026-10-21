@@ -231,6 +231,8 @@ if (!formData.lastName.trim()) {
       value={formData.firstName}
       onChange={handleChange}
       maxLength={20}
+      placeholder="First name"
+      autoComplete="given-name"
       className={inputCls}
     />
 
@@ -253,6 +255,8 @@ if (!formData.lastName.trim()) {
       value={formData.lastName}
       onChange={handleChange}
       maxLength={20}
+      placeholder="Last name"
+      autoComplete="family-name"
       className={inputCls}
     />
 
@@ -279,7 +283,7 @@ if (!formData.lastName.trim()) {
         onChange={handleChange}
         maxLength={10}
         className={inputCls}
-        placeholder="WhatsApp preferred"
+        placeholder="10-digit mobile (WhatsApp preferred)"
       />
 
       {errors.phone && (
@@ -328,7 +332,7 @@ if (!formData.lastName.trim()) {
         onChange={handleChange}
         maxLength={30}
         className={inputCls}
-        placeholder="Institution / School"
+        placeholder="School / institution name"
       />
 
       {errors.institution && (
@@ -350,7 +354,7 @@ if (!formData.lastName.trim()) {
         onChange={handleChange}
         maxLength={20}
         className={inputCls}
-        placeholder="Principal"
+        placeholder="e.g. Principal, Director, Trustee"
       />
 
       {errors.designation && (
@@ -408,7 +412,7 @@ if (!formData.lastName.trim()) {
         onChange={handleChange}
         maxLength={30}
         className={inputCls}
-        placeholder="Enter city"
+        placeholder="City"
       />
 
       {errors.city && (
@@ -433,7 +437,7 @@ if (!formData.lastName.trim()) {
       onChange={handleChange}
       maxLength={250}
       className={`${inputCls} min-h-[140px] resize-none`}
-      placeholder="Tell us about your enquiry..."
+      placeholder="Tell us about your enquiry — a study visit, Educarnival, or anything else"
     />
 
     {errors.message && (
