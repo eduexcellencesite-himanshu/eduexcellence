@@ -64,7 +64,7 @@ export default function Event() {
                   </h3>
                   <p className="mt-2.5 flex items-center gap-2 text-[14px] text-[#6A748B]">
                     <LocationOnOutlinedIcon
-                      sx={{ fontSize: 15, color: "#EC4899" }}
+                      sx={{ fontSize: 15, color: "#E8861A" }}
                       className="shrink-0"
                     />
                     {ev.location}
