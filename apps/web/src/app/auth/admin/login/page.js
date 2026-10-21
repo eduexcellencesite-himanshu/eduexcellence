@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 
 export default function Login() {
 
@@ -130,25 +129,16 @@ useEffect(() => {
           <div className="w-full max-w-[430px]">
             {/* Logo */}
 
-            <div className="mb-8 flex justify-center">
-              <div className="flex items-center gap-3">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#FFF3E2]">
-                  <SchoolOutlinedIcon
-                    sx={{
-                      color: "#FF9D29",
-                      fontSize: 28,
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <h3 className="heading-font text-[24px] font-extrabold text-[#16223A]">
-                    EduExcellence
-                  </h3>
-
-                  <p className="text-[13px] text-[#6B7488]">Admin Portal</p>
-                </div>
-              </div>
+            <div className="mb-8 flex flex-col items-center gap-2">
+              <Image
+                src="/assets/logo.png"
+                alt="EduExcellence"
+                width={220}
+                height={25}
+                priority
+                className="h-[30px] w-auto object-contain"
+              />
+              <p className="text-[13px] font-medium uppercase tracking-[0.14em] text-[#6B7488]">Admin Portal</p>
             </div>
 
             {/* Heading */}

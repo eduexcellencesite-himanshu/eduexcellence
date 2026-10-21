@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 import MenuIcon from "@mui/icons-material/Menu";
@@ -11,7 +12,6 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import ContactPhoneOutlinedIcon from "@mui/icons-material/ContactPhoneOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import HandshakeOutlinedIcon from "@mui/icons-material/HandshakeOutlined";
-import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 
 const menus = [
   {
@@ -70,21 +70,16 @@ export default function Sidebar() {
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/10 p-6">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#FF9D29]">
-              <SchoolOutlinedIcon />
-            </div>
-
-            <div>
-              <h2 className="text-xl font-bold">
-                EduExcellence
-              </h2>
-
-              {/* <p className="text-xs text-slate-400">
-                Admin Portal
-              </p> */}
-            </div>
-          </div>
+          <Link href="/admin/dashboard" className="flex items-center">
+            <Image
+              src="/assets/logo-white.png"
+              alt="EduExcellence"
+              width={500}
+              height={77}
+              priority
+              className="h-[26px] w-auto object-contain"
+            />
+          </Link>
 
           <button
             onClick={() => setOpen(false)}
