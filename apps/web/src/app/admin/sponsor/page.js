@@ -163,7 +163,7 @@ const tableData = sponsors.map((item) => ({
       )}
 
       {open && selectedSponsor && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+  <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/50 p-4">
     <div className="w-full max-w-3xl rounded-2xl bg-white p-6 shadow-xl">
 
       <div className="mb-6 flex items-center justify-between">
@@ -179,7 +179,7 @@ const tableData = sponsors.map((item) => ({
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
 
         <div>
           <p className="text-sm text-gray-500">Salutation</p>

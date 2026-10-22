@@ -1,10 +1,15 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import { useEffect, useState } from "react";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 export default function ScrollToTopButton() {
+  // Not on the admin panel or its login page — these are visitor-facing helpers.
+  const pathname = usePathname();
+  const onAdmin = pathname?.startsWith("/admin") || pathname?.startsWith("/auth/admin");
   const [atBottom, setAtBottom] = useState(false);
 
   useEffect(() => {
@@ -37,6 +42,8 @@ export default function ScrollToTopButton() {
       });
     }
   };
+
+  if (onAdmin) return null;
 
   return (
     <button

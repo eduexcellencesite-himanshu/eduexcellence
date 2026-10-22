@@ -1,8 +1,13 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 export default function WhatsAppButton() {
+  // Not on the admin panel or its login page — these are visitor-facing helpers.
+  const pathname = usePathname();
+  const onAdmin = pathname?.startsWith("/admin") || pathname?.startsWith("/auth/admin");
   const phone = "919990418600"; // Replace with your WhatsApp number
 
   const message = encodeURIComponent(
@@ -13,6 +18,8 @@ Please share the details.
 
 Thank you!`,
   );
+
+  if (onAdmin) return null;
 
   return (
     <a
