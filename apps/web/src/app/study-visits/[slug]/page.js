@@ -8,6 +8,7 @@ import Itinerary from "../../program/Itinerary";
 import { getProgram, isPast } from "../../../lib/programs";
 import GainSwiper from "../GainSwiper";
 import CardSwiper from "../CardSwiper";
+import FeatureVideo from "../../../components/ui/FeatureVideo";
 import LegacySwiper from "../LegacySwiper";
 
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
@@ -836,7 +837,7 @@ const CONTENT = {
     // goes away once the domain points at Vercel.
     featureVideo: "/assets/finland-study-visit.mp4",
     featureVideoTitle: "The journey to a world-class education system",
-    featureVideoPoster: "/assets/gal-Finland.png",
+    featureVideoPoster: "/assets/finland-video-poster.webp",
     galleryHeading: "Moments from this visit",
     gallery: [
       { type: "image", img: "/assets/fin-visit-1.jpg" },
@@ -1173,13 +1174,10 @@ export default async function StudyVisitPage({ params }) {
                 </h2>
               </div>
               <div className="mx-auto max-w-[900px] overflow-hidden rounded-2xl border border-white/10 bg-black">
-                <video
-                  className="aspect-video w-full"
+                <FeatureVideo
                   src={c.featureVideo}
                   poster={c.featureVideoPoster}
-                  controls
-                  controlsList="nodownload"
-                  preload="none"
+                  title={c.featureVideoTitle}
                 />
               </div>
             </div>
