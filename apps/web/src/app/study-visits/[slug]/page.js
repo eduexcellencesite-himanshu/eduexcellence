@@ -832,8 +832,9 @@ const CONTENT = {
         "/assets/fin-1.jpg",
       ],
     ],
-    featureVideo:
-      "https://eduexcellence.in/wp-content/uploads/2024/06/Dextres-Finland-Video.mp4",
+    // Self-hosted 720p copy; the original lived on the old WordPress host, which
+    // goes away once the domain points at Vercel.
+    featureVideo: "/assets/finland-study-visit.mp4",
     featureVideoTitle: "The journey to a world-class education system",
     featureVideoPoster: "/assets/gal-Finland.png",
     galleryHeading: "Moments from this visit",
