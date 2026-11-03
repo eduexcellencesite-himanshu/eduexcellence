@@ -1,6 +1,8 @@
 
 const mongoose = require("mongoose");
 const PartnershipInquiry = require("../models/PartnershipInquiry");
+const { notify } = require("../utils/mailer");
+const tpl = require("../utils/emailTemplates");
 
 const VALID_STATUSES = [
   "new",
@@ -76,6 +78,14 @@ exports.createInquiry = async (req, res) => {
       pageUrl: typeof pageUrl === "string"
         ? pageUrl.slice(0, 2000)
         : "",
+    });
+
+    // Confirmation to the sender and a notification to ADMIN_EMAIL, like the other forms.
+    // notify() never throws, so an email problem never fails the submission.
+    await notify({
+      userEmail: inquiry.email,
+      userTpl: tpl.partnershipUser(inquiry),
+      adminTpl: tpl.partnershipAdmin(inquiry),
     });
 
     return res.status(201).json({
