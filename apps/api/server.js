@@ -52,8 +52,9 @@ app.use(
 );
 const PORT = process.env.PORT || 5000;
 
-// Local Development Only
-if (process.env.NODE_ENV !== "production") {
+// Started directly (`node server.js`: local dev, Docker, Google Cloud Run) it listens on PORT.
+// On Vercel the file is imported instead, so it only exports the app.
+if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`Server Running On Port ${PORT}`);
   });

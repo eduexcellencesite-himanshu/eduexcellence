@@ -1,0 +1,18 @@
+# Builds the website image on Google Cloud Build. NEXT_PUBLIC_* values are built into the site:
+#   gcloud builds submit --config cloudbuild-web.yaml --substitutions=_IMAGE=…,_API_URL=…,_TURNSTILE_SITE_KEY=…,_SITE_URL=… .
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -f
+      - apps/web/Dockerfile
+      - --build-arg
+      - NEXT_PUBLIC_API_URL=${_API_URL}
+      - --build-arg
+      - NEXT_PUBLIC_TURNSTILE_SITE_KEY=${_TURNSTILE_SITE_KEY}
+      - --build-arg
+      - NEXT_PUBLIC_SITE_URL=${_SITE_URL}
+      - -t
+      - ${_IMAGE}
+      - .
+images: ["${_IMAGE}"]
