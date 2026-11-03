@@ -1,0 +1,6 @@
+# Builds the API image on Google Cloud Build:
+#   gcloud builds submit --config cloudbuild-api.yaml --substitutions=_IMAGE=asia-southeast1-docker.pkg.dev/PROJECT/edu/api .
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args: ["build", "-f", "apps/api/Dockerfile", "-t", "${_IMAGE}", "."]
+images: ["${_IMAGE}"]
