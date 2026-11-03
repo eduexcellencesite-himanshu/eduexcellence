@@ -218,6 +218,49 @@ function sponsorAdmin(d) {
   };
 }
 
+/* ---------- Partnership (Educarnival) ---------- */
+
+function partnershipUser(d) {
+  const first = (d.name || "").trim().split(" ")[0];
+  return {
+    subject: "Thanks for your interest in partnering with Educarnival",
+    html: layout({
+      heading: `Thank you${first ? `, ${esc(first)}` : ""}!`,
+      preheader: "We've received your partnership enquiry.",
+      intro: "Thank you for your interest in partnering with Educarnival. Our team will review your enquiry and get back to you shortly. Here's a copy of what you sent:",
+      inner: detailTable([
+        ["Name", d.name],
+        ["Email", d.email],
+        ["Phone", d.phone],
+        ["Organisation", d.organisation],
+        ["Interested in", d.interest],
+        ["Message", d.message],
+      ]),
+      cta: { text: "Visit EduExcellence", url: SITE_URL },
+    }),
+  };
+}
+function partnershipAdmin(d) {
+  return {
+    subject: `New partnership enquiry from ${d.organisation || d.name || d.email}`,
+    html: layout({
+      heading: "New partnership enquiry",
+      preheader: `${d.organisation || d.name || d.email} · ${d.interest || ""}`,
+      intro: "A new partnership enquiry was submitted through the website.",
+      inner: detailTable([
+        ["Name", d.name],
+        ["Email", d.email],
+        ["Phone", d.phone],
+        ["Organisation", d.organisation],
+        ["Interested in", d.interest],
+        ["Message", d.message],
+        ["Sent from", d.pageUrl],
+      ]),
+      cta: { text: "Open in admin", url: `${SITE_URL}/admin/partnership` },
+    }),
+  };
+}
+
 module.exports = {
   contactUser,
   contactAdmin,
@@ -225,4 +268,6 @@ module.exports = {
   registrationAdmin,
   sponsorUser,
   sponsorAdmin,
+  partnershipUser,
+  partnershipAdmin,
 };
