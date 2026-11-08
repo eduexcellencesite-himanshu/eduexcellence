@@ -12,16 +12,8 @@ export const PROGRAMS = [
     startDate: "2026-04-26",
     endDate: "2026-05-03",
   },
-  {
-    slug: "uk-study-visit-2026",
-    type: "study-visit",
-    title: "UK Study Visit 2026",
-    short: "UK Study Visit 2026",
-    location: "London & Cambridge, UK",
-    dateLabel: "12–18 Oct 2026",
-    startDate: "2026-10-12",
-    endDate: "2026-10-18",
-  },
+  // UK Study Visit 2026 hidden on 8 Nov 2026: most of its page photos were wrong. Its page copy is still in
+  // app/study-visits/[slug]/page.js; re-add the entry here and in generateStaticParams there to bring it back.
   // Japan Study Visit 2026 removed on 2026-10-21 (placeholder programme, not confirmed).
   // Its page copy is still in app/study-visits/[slug]/page.js; re-add the entry here
   // and in generateStaticParams there to bring it back.
